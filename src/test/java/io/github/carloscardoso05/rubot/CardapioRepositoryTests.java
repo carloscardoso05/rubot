@@ -1,8 +1,10 @@
-package io.github.carloscardoso05.rubot.scraper;
+package io.github.carloscardoso05.rubot;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 import io.github.carloscardoso05.rubot.models.Cardapio;
+import io.github.carloscardoso05.rubot.scraper.CardapioFetcher;
+import io.github.carloscardoso05.rubot.scraper.Scraper;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 import java.time.DayOfWeek;
@@ -15,24 +17,26 @@ import org.jsoup.Jsoup;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
-class ScraperTest {
+class CardapioRepositoryTest {
 
-  private static Scraper scraperService;
+  private static Scraper scraper;
+  private static CardapioRepository cardapioRepository;
   private static final Month CARDAPIO_MONTH = Month.SEPTEMBER;
 
   @BeforeAll
   static void beforeAll() throws Exception {
-    InputStream is = ScraperTest.class.getClassLoader().getResourceAsStream("RU.html");
+    InputStream is = CardapioRepositoryTest.class.getClassLoader().getResourceAsStream("RU.html");
     assertThat(is).isNotNull();
     String html = new String(is.readAllBytes(), StandardCharsets.UTF_8);
 
     CardapioFetcher fetcher = () -> Jsoup.parse(html);
-    scraperService = new Scraper(fetcher);
+    scraper = new Scraper(fetcher);
+    cardapioRepository = new CardapioRepository(scraper);
   }
 
   @Test
   void testCardapioDaSemanaIsNotEmptyAndCorrect() {
-    Map<DayOfWeek, Cardapio> cardapios = scraperService.getCardapioDaSemana();
+    Map<DayOfWeek, Cardapio> cardapios = cardapioRepository.getCardapioDaSemana();
     assertThat(cardapios).isNotNull().hasSize(5);
     assertThat(cardapios.keySet())
         .doesNotContainAnyElementsOf(Set.of(DayOfWeek.SATURDAY, DayOfWeek.SUNDAY));

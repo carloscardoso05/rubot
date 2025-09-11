@@ -29,7 +29,7 @@ public class Scraper {
     this.fetcher = fetcher;
   }
 
-  public Map<DayOfWeek, Cardapio> getCardapioDaSemana() {
+  public Map<DayOfWeek, Cardapio> buscarCardapiosDaSemana() {
     Document doc = fetcher.fetch();
     Map<DayOfWeek, Cardapio> cardapioSemanal = new EnumMap<>(DayOfWeek.class);
 
@@ -45,11 +45,6 @@ public class Scraper {
     }
 
     return cardapioSemanal;
-  }
-
-  public Cardapio getCardapioDeHoje() {
-    Map<DayOfWeek, Cardapio> semana = getCardapioDaSemana();
-    return semana.get(LocalDate.now().getDayOfWeek());
   }
 
   private Refeicao extrairRefeicao(Element td) {

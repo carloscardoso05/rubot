@@ -3,9 +3,9 @@ package io.github.carloscardoso05.rubot.bot;
 import static org.telegram.abilitybots.api.objects.Locality.ALL;
 import static org.telegram.abilitybots.api.objects.Privacy.PUBLIC;
 
+import io.github.carloscardoso05.rubot.CardapioRepository;
 import io.github.carloscardoso05.rubot.formatter.CardapioFormatter;
 import io.github.carloscardoso05.rubot.models.Cardapio;
-import io.github.carloscardoso05.rubot.scraper.Scraper;
 import java.time.DayOfWeek;
 import java.util.List;
 import java.util.Map;
@@ -43,15 +43,15 @@ public class RUBot extends AbilityBot {
 
       """;
 
-  private final Scraper scraper;
+  private final CardapioRepository cardapioRepository;
   private final CardapioFormatter cardapioFormatter;
 
   public RUBot(
       @Value("${bot.key}") String botToken,
-      Scraper scraperService,
+      CardapioRepository cardapioRepository,
       CardapioFormatter cardapioFormatter) {
     super(botToken, "rub_pa_bot");
-    this.scraper = scraperService;
+    this.cardapioRepository = cardapioRepository;
     this.cardapioFormatter = cardapioFormatter;
   }
 
@@ -111,7 +111,7 @@ public class RUBot extends AbilityBot {
             ctx -> {
               logger.debug("Processando /hoje");
               try {
-                Cardapio cardapio = scraper.getCardapioDeHoje();
+                Cardapio cardapio = cardapioRepository.getCardapioDeHoje();
                 String response = cardapioFormatter.formatarCardapioDoDia(cardapio);
                 silent.sendMd(response, ctx.chatId());
               } catch (Exception e) {
@@ -134,7 +134,7 @@ public class RUBot extends AbilityBot {
             ctx -> {
               logger.debug("Processando /semana");
               try {
-                Map<DayOfWeek, Cardapio> cardapioSemanal = scraper.getCardapioDaSemana();
+                Map<DayOfWeek, Cardapio> cardapioSemanal = cardapioRepository.getCardapioDaSemana();
                 String response = cardapioFormatter.formatarCardapioDaSemana(cardapioSemanal);
                 silent.sendMd(response, ctx.chatId());
               } catch (Exception e) {
