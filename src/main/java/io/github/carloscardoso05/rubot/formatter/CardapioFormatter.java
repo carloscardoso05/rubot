@@ -31,14 +31,14 @@ public class CardapioFormatter {
     String jantaFormatada = formatarRefeicao(cardapio.janta());
 
     return """
-    🍽️ **Cardápio de %s** (%s)
+    🍽️ **CARDÁPIO DE %s** (%s)
 
     🌅 **ALMOÇO**
     %s
     🌙 **JANTA**
     %s\
     """
-        .formatted(diaSemana, dataFormatada, almocoFormatado, jantaFormatada);
+        .formatted(diaSemana.toUpperCase(), dataFormatada, almocoFormatado, jantaFormatada);
   }
 
   public String formatarCardapioDaSemana(Map<DayOfWeek, Cardapio> cardapioSemanal) {
@@ -68,11 +68,16 @@ public class CardapioFormatter {
 
     return """
     📆 **%s** (%s)
-    🌅 **Almoço:** %s
-    🌙 **Janta:** %s
+    🌅 **Almoço:** %s | 🥬 %s
+    🌙 **Janta:** %s | 🥬 %s
     """
         .formatted(
-            diaSemana, dataFormatada, cardapio.almoco().principal(), cardapio.janta().principal());
+            diaSemana,
+            dataFormatada,
+            capitalize(cardapio.almoco().principal()),
+            capitalize(cardapio.almoco().vegetariano()),
+            capitalize(cardapio.janta().principal()),
+            capitalize(cardapio.janta().vegetariano()));
   }
 
   private String formatarRefeicao(Refeicao refeicao) {
@@ -80,7 +85,7 @@ public class CardapioFormatter {
     if (!refeicao.acompanhamentos().isEmpty()) {
       StringBuilder acompanhamentos = new StringBuilder("🍚 **Acompanhamentos:**\n");
       for (String acompanhamento : refeicao.acompanhamentos()) {
-        acompanhamentos.append("  • ").append(acompanhamento).append("\n");
+        acompanhamentos.append("  • ").append(capitalize(acompanhamento)).append("\n");
       }
       acompanhamentosFormatados = acompanhamentos.toString();
     }
@@ -90,6 +95,16 @@ public class CardapioFormatter {
     🥬 **Vegetariano:** %s
     %s\
     """
-        .formatted(refeicao.principal(), refeicao.vegetariano(), acompanhamentosFormatados);
+        .formatted(
+            capitalize(refeicao.principal()),
+            capitalize(refeicao.vegetariano()),
+            acompanhamentosFormatados);
+  }
+
+  private String capitalize(String str) {
+    if (str == null || str.isEmpty()) {
+      return str;
+    }
+    return str.substring(0, 1).toUpperCase() + str.substring(1).toLowerCase();
   }
 }
