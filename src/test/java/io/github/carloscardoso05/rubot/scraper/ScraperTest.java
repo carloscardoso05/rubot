@@ -1,4 +1,4 @@
-package io.github.carloscardoso05.rubot.services;
+package io.github.carloscardoso05.rubot.scraper;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -15,19 +15,19 @@ import org.jsoup.Jsoup;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
-class ScraperServiceTest {
+class ScraperTest {
 
-  private static ScraperService scraperService;
+  private static Scraper scraperService;
   private static final Month CARDAPIO_MONTH = Month.SEPTEMBER;
 
   @BeforeAll
   static void beforeAll() throws Exception {
-    InputStream is = ScraperServiceTest.class.getClassLoader().getResourceAsStream("RU.html");
+    InputStream is = ScraperTest.class.getClassLoader().getResourceAsStream("RU.html");
     assertThat(is).isNotNull();
     String html = new String(is.readAllBytes(), StandardCharsets.UTF_8);
 
     CardapioFetcher fetcher = () -> Jsoup.parse(html);
-    scraperService = new ScraperService(fetcher);
+    scraperService = new Scraper(fetcher);
   }
 
   @Test
@@ -154,10 +154,5 @@ class ScraperServiceTest {
     assertThat(cardapio.janta().principal()).isEqualTo(principalJanta);
     assertThat(cardapio.janta().vegetariano()).isEqualTo(vegetarianoJanta);
     assertThat(cardapio.janta().acompanhamentos()).isEqualTo(acompanhamentosJanta);
-  }
-
-  @Test
-  void test() {
-    assertThat(scraperService.getCardapioDaSemana()).isNotNull();
   }
 }

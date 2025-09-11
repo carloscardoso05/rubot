@@ -1,0 +1,9 @@
+{
+  "properties": [
+    {
+      "name": "bot.key",
+      "type": "java.lang.String",
+      "description": "The Telegram Bot Key"
+    }
+  ]
+}

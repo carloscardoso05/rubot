@@ -1,11 +1,11 @@
-package io.github.carloscardoso05.rubot.services;
+package io.github.carloscardoso05.rubot.scraper;
 
 import java.io.IOException;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
-@Service
+@Component
 public class DefaultCardapioFetcher implements CardapioFetcher {
 
   private static final String CARDAPIO_URL =

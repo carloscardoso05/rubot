@@ -1,4 +1,4 @@
-package io.github.carloscardoso05.rubot.services;
+package io.github.carloscardoso05.rubot.scraper;
 
 import org.jsoup.nodes.Document;
 
