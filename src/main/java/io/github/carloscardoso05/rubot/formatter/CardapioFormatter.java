@@ -31,11 +31,11 @@ public class CardapioFormatter {
     String jantaFormatada = formatarRefeicao(cardapio.janta());
 
     return """
-    🍽️ **CARDÁPIO DE %s** (%s)
+    🍽️ *CARDÁPIO DE %s (%s)*
 
-    🌅 **ALMOÇO**
+    🌅 *ALMOÇO*
     %s
-    🌙 **JANTA**
+    🌙 *JANTA*
     %s\
     """
         .formatted(diaSemana.toUpperCase(), dataFormatada, almocoFormatado, jantaFormatada);
@@ -55,7 +55,7 @@ public class CardapioFormatter {
     }
 
     return """
-    📅 **CARDÁPIO DA SEMANA**
+    🍽️ *CARDÁPIO DA SEMANA*
 
     %s\
     """
@@ -67,9 +67,14 @@ public class CardapioFormatter {
     String dataFormatada = cardapio.dia().format(DATE_FORMATTER);
 
     return """
-    📆 **%s** (%s)
-    🌅 **Almoço:** %s | 🥬 %s
-    🌙 **Janta:** %s | 🥬 %s
+    📆 *%s (%s)*
+    🌅 *Almoço:*
+        *• Principal:* %s
+        *• Vegetariano:* %s
+    🌙 *Janta:*
+        *• Principal:* %s
+        *• Vegetariano:* %s
+
     """
         .formatted(
             diaSemana,
@@ -83,7 +88,7 @@ public class CardapioFormatter {
   private String formatarRefeicao(Refeicao refeicao) {
     String acompanhamentosFormatados = "";
     if (!refeicao.acompanhamentos().isEmpty()) {
-      StringBuilder acompanhamentos = new StringBuilder("🍚 **Acompanhamentos:**\n");
+      StringBuilder acompanhamentos = new StringBuilder("🍚 *Acompanhamentos:*\n");
       for (String acompanhamento : refeicao.acompanhamentos()) {
         acompanhamentos.append("  • ").append(capitalize(acompanhamento)).append("\n");
       }
@@ -91,8 +96,8 @@ public class CardapioFormatter {
     }
 
     return """
-    🍖 **Principal:** %s
-    🥬 **Vegetariano:** %s
+    🍖 *Principal:* %s
+    🥬 *Vegetariano:* %s
     %s\
     """
         .formatted(

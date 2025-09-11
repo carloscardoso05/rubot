@@ -25,7 +25,7 @@ public class RUBot extends AbilityBot {
 
   private static final String HELP_MESSAGE =
       """
-      🤖 **RUBot - Comandos Disponíveis:**
+      🤖 *RUBot - Comandos Disponíveis:*
 
       /hoje - Mostra o cardápio de hoje
       /semana - Mostra o cardápio de toda a semana
@@ -36,7 +36,7 @@ public class RUBot extends AbilityBot {
 
   private static final String WELCOME_MESSAGE =
       """
-      🍽️ **Bem-vindo ao RUBot!**
+      🍽️ *Bem-vindo ao RUBot!*
 
       Olá! Eu sou o bot do Restaurante Universitário da UFPA.
       Posso te ajudar a consultar o cardápio dos dias da semana.
