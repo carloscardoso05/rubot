@@ -1,5 +1,8 @@
 services:
   rubot:
+    build:
+      context: .
+      dockerfile: dockerfile
     image: rubot
     environment:
       - BOT_KEY=${BOT_KEY}
