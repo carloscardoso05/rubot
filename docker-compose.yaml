@@ -1,0 +1,5 @@
+services:
+  rubot:
+    image: rubot
+    environment:
+      - BOT_KEY=${BOT_KEY}
